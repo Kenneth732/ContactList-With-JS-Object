@@ -146,3 +146,39 @@ function handleEdit(event) {
   }
   
   
+  // Function to handle contact update
+  function handleUpdate(event, contactId) {
+    event.preventDefault();
+  
+    var firstName = document.getElementById("firstNameInput").value;
+    var lastName = document.getElementById("lastNameInput").value;
+    var phoneNumber = document.getElementById("phoneInput").value;
+    var email = document.getElementById("emailInput").value;
+  
+    var updatedContact = new Contact(firstName, lastName, phoneNumber, email);
+    addressBook.addContact(updatedContact);
+  
+    // Clear the input fields after updating the contact
+    document.getElementById("firstNameInput").value = "";
+    document.getElementById("lastNameInput").value = "";
+    document.getElementById("phoneInput").value = "";
+    document.getElementById("emailInput").value = "";
+  
+    // Change the form submission button back to "Add Contact"
+    var submitButton = document.querySelector("button[type='submit']");
+    submitButton.textContent = "Add Contact";
+    submitButton.removeEventListener("click", handleUpdate);
+    submitButton.addEventListener("click", handleFormSubmit);
+  
+    // Refresh the contact list
+    displayContacts(addressBook);
+  }
+  
+  // Initialize the AddressBook and attach event listeners
+  var addressBook = new AddressBook();
+  var form = document.getElementById("form");
+  var contactsDiv = document.getElementById("contacts");
+  
+  form.addEventListener("submit", handleFormSubmit);
+  contactsDiv.addEventListener("click", handleEdit);
+  
