@@ -16,3 +16,8 @@ function AddressBook() {
     this.contacts[contact.id] = contact;
   };
   
+  AddressBook.prototype.assignId = function () {
+    this.currentId += 1;
+    return this.currentId;
+  };
+  
