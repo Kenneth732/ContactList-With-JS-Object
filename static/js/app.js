@@ -21,3 +21,10 @@ function AddressBook() {
     return this.currentId;
   };
   
+  AddressBook.prototype.findContact = function (id) {
+    if (this.contacts[id] !== undefined) {
+      return this.contacts[id];
+    }
+    return false;
+  };
+  
