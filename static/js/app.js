@@ -82,3 +82,67 @@ function AddressBook() {
       contactsDiv.appendChild(contactElement);
     }
   }
+  
+  // Function to handle form submission and add a new contact
+  function handleFormSubmit(event) {
+    event.preventDefault();
+  
+    var firstName = document.getElementById("firstNameInput").value;
+    var lastName = document.getElementById("lastNameInput").value;
+    var phoneNumber = document.getElementById("phoneInput").value;
+    var email = document.getElementById("emailInput").value;
+  
+    var newContact = new Contact(firstName, lastName, phoneNumber, email);
+    addressBook.addContact(newContact);
+  
+    // Clear the input fields after adding a new contact
+    document.getElementById("firstNameInput").value = "";
+    document.getElementById("lastNameInput").value = "";
+    document.getElementById("phoneInput").value = "";
+    document.getElementById("emailInput").value = "";
+  
+    displayContacts(addressBook);
+  }
+  
+// Function to handle contact editing and deletion
+function handleEdit(event) {
+    if (event.target.classList.contains("edit-button")) {
+      var contactId = parseInt(event.target.getAttribute("data-id"));
+      var contact = addressBook.findContact(contactId);
+      if (contact) {
+        var firstNameInput = document.getElementById("firstNameInput");
+        var lastNameInput = document.getElementById("lastNameInput");
+        var phoneInput = document.getElementById("phoneInput");
+        var emailInput = document.getElementById("emailInput");
+  
+        // Fill the form with the contact details for editing
+        firstNameInput.value = contact.firstName;
+        lastNameInput.value = contact.lastName;
+        phoneInput.value = contact.phoneNumber;
+        emailInput.value = contact.email;
+  
+        // Remove the old contact temporarily while editing
+        delete addressBook.contacts[contactId];
+  
+        // Disable the form submission temporarily while editing
+        form.removeEventListener("submit", handleFormSubmit);
+  
+        // Change the form submission button to an update button
+        var submitButton = document.querySelector("button[type='submit']");
+        submitButton.textContent = "Update Contact";
+        submitButton.removeEventListener("click", handleFormSubmit);
+        submitButton.addEventListener("click", function (event) {
+          handleUpdate(event, contactId);
+        });
+      }
+    } else if (event.target.classList.contains("delete-button")) {
+      var contactId = parseInt(event.target.getAttribute("data-id"));
+      var isDeleted = addressBook.deleteContact(contactId);
+      if (isDeleted) {
+        // Refresh the contact list if contact is successfully deleted
+        displayContacts(addressBook);
+      }
+    }
+  }
+  
+  
