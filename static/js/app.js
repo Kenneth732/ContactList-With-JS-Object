@@ -58,3 +58,8 @@ function AddressBook() {
       writable: true,
     });
   }
+  
+  Contact.prototype.fullName = function () {
+    return this.firstName + " " + this.lastName;
+  };
+  
