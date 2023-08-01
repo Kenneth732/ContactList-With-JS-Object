@@ -63,3 +63,22 @@ function AddressBook() {
     return this.firstName + " " + this.lastName;
   };
   
+  // Function to display contacts on the webpage
+  function displayContacts(addressBook) {
+    var contactsDiv = document.getElementById("contacts");
+    contactsDiv.innerHTML = "";
+  
+    for (var contactId in addressBook.contacts) {
+      var contact = addressBook.contacts[contactId];
+      var contactElement = document.createElement("div");
+      contactElement.className = "contact";
+      contactElement.innerHTML = `
+        <p>Name: ${contact.fullName()}</p>
+        <p>Phone: ${contact.phoneNumber}</p>
+        <p>Email: ${contact.email}</p>
+        <button class="edit-button" data-id="${contact.id}">Edit</button>
+        <button class="delete-button" data-id="${contact.id}">Delete</button>
+      `;
+      contactsDiv.appendChild(contactElement);
+    }
+  }
