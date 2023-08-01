@@ -10,3 +10,9 @@ function AddressBook() {
       writable: true,
     });
   }
+  
+  AddressBook.prototype.addContact = function (contact) {
+    contact.id = this.assignId();
+    this.contacts[contact.id] = contact;
+  };
+  
